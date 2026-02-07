@@ -1,0 +1,122 @@
+# API Contract: Task Management Service
+
+## Overview
+REST API for enhanced task management with priorities, tags, search, filtering, and sorting capabilities.
+
+## Base URL
+`http://localhost:8000/api` (development)
+`https://api.example.com/v1` (production)
+
+## Authentication
+None required for this feature (will be added in future phases)
+
+## Task Resource
+
+### Task Object
+```json
+{
+  "id": 1,
+  "title": "Complete project proposal",
+  "description": "Draft and submit the quarterly project proposal",
+  "status": "pending",
+  "priority": "high",
+  "tag": "work",
+  "due_date": "2026-02-15T10:00:00Z",
+  "created_at": "2026-02-02T10:00:00Z",
+  "updated_at": "2026-02-02T10:00:00Z"
+}
+```
+
+### Create Task
+**POST** `/tasks`
+
+**Request Body**:
+```json
+{
+  "title": "string (required, max 100 chars)",
+  "description": "string (optional, max 100 chars)",
+  "status": "enum (pending, completed) default pending",
+  "priority": "enum (high, medium, low)",
+  "tag": "enum (work, home)",
+  "due_date": "datetime (optional)"
+}
+```
+
+**Response**:
+- `201 Created`: Task created successfully
+- `400 Bad Request`: Validation error
+- `422 Unprocessable Entity`: Invalid data format
+
+### Get Tasks
+**GET** `/tasks`
+
+**Query Parameters**:
+- `search` (string): Search keyword for title/description
+- `status` (string): Filter by status (pending/completed)
+- `priority` (string): Filter by priority (high/medium/low)
+- `tag` (string): Filter by tag (work/home)
+- `sort` (string): Sort by (due_date/priority/title)
+- `order` (string): Sort order (asc/desc, default asc)
+
+**Response**:
+- `200 OK`: Array of task objects
+```json
+{
+  "tasks": [...],
+  "total": 10,
+  "page": 1,
+  "size": 10
+}
+```
+
+### Get Task
+**GET** `/tasks/{id}`
+
+**Response**:
+- `200 OK`: Single task object
+- `404 Not Found`: Task not found
+
+### Update Task
+**PUT** `/tasks/{id}`
+
+**Request Body** (all fields optional):
+```json
+{
+  "title": "string (max 100 chars)",
+  "description": "string (max 100 chars)",
+  "status": "enum (pending, completed)",
+  "priority": "enum (high, medium, low)",
+  "tag": "enum (work, home)",
+  "due_date": "datetime"
+}
+```
+
+**Response**:
+- `200 OK`: Updated task object
+- `400 Bad Request`: Validation error
+- `404 Not Found`: Task not found
+
+### Delete Task
+**DELETE** `/tasks/{id}`
+
+**Response**:
+- `204 No Content`: Task deleted successfully
+- `404 Not Found`: Task not found
+
+## Error Responses
+All error responses follow this format:
+```json
+{
+  "detail": "Human-readable error message",
+  "code": "machine-readable-error-code",
+  "timestamp": "ISO 8601 timestamp"
+}
+```
+
+## Validation Rules
+- Title: Required, max 100 characters
+- Description: Optional, max 100 characters
+- Status: Must be "pending" or "completed"
+- Priority: Must be "high", "medium", or "low"
+- Tag: Must be "work" or "home"
+- Due date: Must be valid ISO 8601 datetime if provided

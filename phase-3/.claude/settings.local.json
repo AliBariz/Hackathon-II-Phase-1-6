@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -X GET http://127.0.0.1:8008/auth/me -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNTAyYzE4NS0zODkyLTRjZjItYThmYy05NTExMDQzMjQ0OGYiLCJlbWFpbCI6ImZpbmFsd29ya2luZzJAZXhhbXBsZS5jb20iLCJleHAiOjE3Njg1ODUzMjN9.pAOXBeOaHmVGxinysNoAQfLzDzxAe6hgxj93iydk0-I\" --location)",
+      "Bash(npx next dev)",
+      "Bash(powershell -Command \"Start-Sleep -Seconds 5\")",
+      "Bash(curl -X POST http://localhost:8000/auth/register -H \"Content-Type: application/json\" -d \"{\"\"username\"\":\"\"testuser\"\",\"\"email\"\":\"\"test@example.com\"\",\"\"password\"\":\"\"testpassword\"\"}\")",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(powershell -Command:*)"
+    ]
+  }
+}
