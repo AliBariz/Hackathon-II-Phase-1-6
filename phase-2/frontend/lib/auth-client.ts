@@ -1,4 +1,4 @@
-import { createAuth } from "@better-auth/react";
+import { createAuthClient } from "better-auth/client";
 
 // Initialize Better Auth client
 export const { useSession, signIn, signOut } = createAuth({
